@@ -1,11 +1,13 @@
 from sqlite3 import IntegrityError
 from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
 from app.api.schemas.user import UserRead
 from app.settings import settings
 from .routers import api_router
 from sqlalchemy.exc import IntegrityError
 from .authorization.func import get_current_user
+from .authorization.google_oauth.main import authorization_url
 
 
 
@@ -35,3 +37,7 @@ app.include_router(api_router)
 @app.get("/GET", response_model=UserRead)
 async def get(request: Request, user: UserRead = Depends(get_current_user)):
     return user
+
+@app.get("/redirect")
+async def refirect():
+    return RedirectResponse(authorization_url)

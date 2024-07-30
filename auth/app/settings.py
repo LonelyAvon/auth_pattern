@@ -1,3 +1,4 @@
+from pathlib import Path, PosixPath
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from yarl import URL
 from enum import Enum
@@ -20,6 +21,7 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
+    DIRECTORY: PosixPath = Path(__file__).resolve().parent.parent
 
     PROJECT_TITLE: str = "auth"
     # FastAPI
