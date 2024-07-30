@@ -29,7 +29,10 @@ class Settings(BaseSettings):
     log_level: LogLevel = LogLevel.INFO
 
     # POSTGRES
-    POSTGRES_HOST: str = "127.0.0.1"
+    POSTGRES_HOST: str = "127.0.0.1" # for makefile target dev
+    # USE THIS HOW USE FASTAPI IN DOCKER CONTAINER 
+    # POSTGRES_HOST: str = "sebai_pattern_db" # for makefile target deploy
+    # POSTGRES_PORT: 5432 # for makefile target deploy
     POSTGRES_PORT: int
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str

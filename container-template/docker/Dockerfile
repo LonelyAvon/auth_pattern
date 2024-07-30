@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y \
 # Copying actuall application
 COPY . /app/src/
 
-CMD ["/usr/local/bin/python", "-m", "sebai_pattern"]
+CMD ["/usr/local/bin/python", "-m", "container_template"]

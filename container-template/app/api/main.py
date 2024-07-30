@@ -3,8 +3,9 @@ from starlette.middleware.cors import CORSMiddleware
 from app.settings import settings
 from .routers import api_router
 from sqlalchemy.exc import IntegrityError
+from app.common.logger import logger
 
-
+logger.critical("MESSAGE FROM LOGGER")
 
 app = FastAPI(
     title=settings.PROJECT_TITLE, 

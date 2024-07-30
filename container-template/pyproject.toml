@@ -1,10 +1,9 @@
 [tool.poetry]
-name = "sebai_pattern"
+name = "container_template"
 version = "0.1.0"
 description = ""
 authors = ["LonelyAvon <92423766+LonelyAvon@users.noreply.github.com>"]
 readme = "README.md"
-
 [tool.poetry.dependencies]
 python = "^3.10"
 alembic = "^1.13.2"
@@ -20,6 +19,7 @@ pyjwt = {extras = ["crypto"], version = "^2.8.0"}
 bcrypt = "^4.1.3"
 datetime = "^5.5"
 python-multipart = "^0.0.9"
+loguru = "^0.7.2"
 
 
 [build-system]
