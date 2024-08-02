@@ -122,3 +122,5 @@ cython_debug/
 *.pem
 
 credentials.json
+
+app/db/migrations/versions/*.py
