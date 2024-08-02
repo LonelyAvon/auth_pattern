@@ -32,7 +32,7 @@ class AbstractRepository(ABC):
         query = insert(self.model).values(**obj.model_dump()).returning(self.model)
         result = await self._session.execute(query)
         return result.scalars().first()
-
+    
     async def update_one(self, obj):
         query = update(self.model).where(self.model.id == obj.id).values(**obj.model_dump()).returning(self.model)
         result = await self._session.execute(query)
