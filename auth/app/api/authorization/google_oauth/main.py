@@ -1,5 +1,6 @@
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
+from googleapiclient.discovery import build
 from app.settings import settings
 # Required, call the from_client_secrets_file method to retrieve the client ID from a
 # client_secret.json file. The client ID (from that file) and access scopes are required. (You can
@@ -13,7 +14,7 @@ flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
 # match one of the authorized redirect URIs for the OAuth 2.0 client, which you
 # configured in the API Console. If this value doesn't match an authorized URI,
 # you will get a 'redirect_uri_mismatch' error.
-flow.redirect_uri = 'https://www.example.com/oauth2callback'
+flow.redirect_uri = 'https://bytecode.su/auth/api/login'
 
 # Generate URL for request to Google's OAuth 2.0 server.
 # Use kwargs to set optional request parameters.
@@ -28,3 +29,11 @@ authorization_url, state = flow.authorization_url(
     login_hint='hint@example.com',
     # Optional, set prompt to 'consent' will prompt the user for consent
     prompt='consent')
+
+# user_info_service = build('oauth2', 'v2', credentials=credentials)
+# user_info = user_info_service.userinfo().get().execute()
+
+# # Выводим данные пользователя если email подтвержден
+# if user_info['verified_email'] == True:
+#     print(user_info['email'])
+#     print(user_info['name'])

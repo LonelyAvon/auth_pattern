@@ -19,7 +19,7 @@ async def validate_current_user(username: str = Form(), password: str = Form()):
             raise HTTPException(status_code=401, detail="User is archived")
         return user
     
-async def get_current_user(access_token: HTTPAuthorizationCredentials = Depends(OAuth2PasswordBearer(tokenUrl=f"{settings.FAST_API_PREFIX}/auth/login"))):
+async def get_current_user(access_token: HTTPAuthorizationCredentials = Depends(OAuth2PasswordBearer(tokenUrl=f"{settings.FAST_API_PREFIX}/user/login"))):
     decoded = decode_jwt(access_token)
     if decoded.get('token_type', None) is None:
         raise HTTPException(status_code=401, detail="Invalid token type")
@@ -49,5 +49,5 @@ async def refresh_acess_token(request: Request):
             raise HTTPException(status_code=401, detail="User not found")
         if user.is_archived:
             raise HTTPException(status_code=401, detail="User is archived")
-        access_token = encode_jwt(payload=create_token("access", {"sub": str(user.id), "username": user.username}))
+        access_token = encode_jwt(payload=create_token("access", {"sub": str(user.id), "username": user.username, "role": user.role}))
         return Token(access_token=access_token)

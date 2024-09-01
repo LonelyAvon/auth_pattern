@@ -8,7 +8,6 @@ class UserCreate(BaseModel):
     surname: str
     name: str
     patronymic: Optional[str] = None
-    is_archived: Optional[bool] = False
 
 class UserRead(BaseModel):
     id: UUID
@@ -16,7 +15,7 @@ class UserRead(BaseModel):
     surname: str
     name: str
     patronymic: Optional[str] = None
-    role: Optional[str] = "user"
+    role: Optional[str]
     is_archived: Optional[bool] = False
 
 class UserUpdate(BaseModel):

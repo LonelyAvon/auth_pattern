@@ -31,6 +31,12 @@ class User(Base):
     is_archived: Mapped[bool] = mapped_column(Boolean, server_default='false')
 
 
+class Email(Base):
+    __tablename__ = "emails"
+    id: Mapped[str] = mapped_column(UUID, primary_key=True, default=uuid4)
+    email: Mapped[str] = mapped_column(String(255), unique=True)
+    name: Mapped[str] = mapped_column(String(255))
+    type: Mapped[str] = mapped_column(String(40))
 
 class Role(Base):
     __tablename__ = "roles"
