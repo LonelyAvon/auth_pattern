@@ -1,7 +1,8 @@
+from pathlib import Path, PosixPath
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
 from yarl import URL
 from enum import Enum
+from app.api.authorization.settings import AuthJWT
 
 class LogLevel(str, Enum):
     """Possible log levels."""
@@ -20,8 +21,9 @@ class Settings(BaseSettings):
     These parameters can be configured
     with environment variables.
     """
+    DIRECTORY: PosixPath = Path(__file__).resolve().parent.parent
 
-    PROJECT_TITLE: str = "sebai_pattern"
+    PROJECT_TITLE: str = "auth"
     # FastAPI
     FAST_API_PORT: str
     FAST_API_PREFIX: str
@@ -29,15 +31,16 @@ class Settings(BaseSettings):
     log_level: LogLevel = LogLevel.INFO
 
     # POSTGRES
-    POSTGRES_HOST: str = "127.0.0.1" # for makefile target dev
+    POSTGRES_HOST: str# for makefile target dev
     # USE THIS HOW USE FASTAPI IN DOCKER CONTAINER 
-    # POSTGRES_HOST: str = "sebai_pattern_db" # for makefile target deploy
-    # POSTGRES_PORT: 5432 # for makefile target deploy
+    # POSTGRES_HOST: str = "localhost" # for makefile target deploy
+    # POSTGRES_PORT: int = 5432 # for makefile target deploy
     POSTGRES_PORT: int
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str 
 
+    auth_jwt: AuthJWT = AuthJWT()
 
     @property
     def db_url(self) -> URL:
@@ -56,7 +59,7 @@ class Settings(BaseSettings):
         )
     
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=".env.develop",
         env_file_encoding="utf-8",
     )
 

@@ -18,8 +18,8 @@ class UserService:
         find_user: User = await UserRepository(self.session).get_user_by_username(user.username)
         if find_user:
             raise HTTPException(status_code=400, detail="User already exists")
-        if not is_valid_email(user.username):
-            raise HTTPException(status_code=400, detail="Invalid email")
+        # if not is_valid_email(user.username):
+        #     raise HTTPException(status_code=400, detail="Invalid email")
         user = await UserRepository(self.session).create(user)
         await UserRepository(self.session).commit()
         return user

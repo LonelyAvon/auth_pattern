@@ -1,24 +1,12 @@
 version: '3.9'
 
 services:
-  app:
-    container_name: ${PROJECT_TITLE}_api
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile
-    restart: always
-    command: uvicorn app.api.main:app --host 0.0.0.0 --port 9000
-    env_file:
-      - .env
-    ports:
-      - ${FAST_API_PORT}:9000
-
   db:
     image: postgres:13.8-bullseye
     container_name: ${PROJECT_TITLE}_db
     restart: always
     env_file:
-      - .env
+      - .env.develop
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -26,7 +14,7 @@ services:
     volumes:
       - auth:/var/lib/postgresql/data
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5000:5432"
 
 volumes:
   auth:
