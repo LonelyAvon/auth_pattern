@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  app:
+  auth_app:
     container_name: ${PROJECT_TITLE}_api
     build:
       context: .
@@ -12,8 +12,10 @@ services:
       - .env.deploy
     ports:
       - 8000:8000
+    networks:
+      - net
 
-  db:
+  auth_postgres:
     image: postgres:13.8-bullseye
     container_name: ${PROJECT_TITLE}_db
     restart: always
@@ -27,7 +29,13 @@ services:
       - auth:/var/lib/postgresql/data
     ports:
       - 5000:5432
+    networks:
+      - net
 
 volumes:
   auth:
-    name: auth
+    name: auth_postgres
+
+networks:
+  net:
+    external: true

@@ -42,6 +42,7 @@ class Settings(BaseSettings):
 
     auth_jwt: AuthJWT = AuthJWT()
 
+
     @property
     def db_url(self) -> URL:
         """
