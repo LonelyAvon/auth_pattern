@@ -12,14 +12,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - auth:/var/lib/postgresql/data
+      - ${PROJECT_TITLE}:/var/lib/postgresql/data
     ports:
-      - "5000:5432"
-    networks:
-      - net
+      - "4432:5432"
 
 volumes:
-  auth:
+  auth_template:
     name: auth_postgres
 
 networks:

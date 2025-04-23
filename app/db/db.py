@@ -1,9 +1,11 @@
-from sqlalchemy.ext.asyncio import create_async_engine
+from typing import Annotated
+
+from fastapi import Depends
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+
 from app.db.base import Base
 from app.settings import settings
-from sqlalchemy.ext.asyncio import AsyncSession
-
 
 DATABASE_URL = str(settings.db_url)
 
@@ -17,5 +19,8 @@ async def create_db_and_tables():
 
 
 async def get_session():
-    async with async_session() as session:
+    async with async_session.begin() as session:
         yield session
+
+
+AsyncSessionDep = Annotated[AsyncSession, Depends(get_session)]
