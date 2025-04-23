@@ -1,7 +1,6 @@
 from typing import List
 
 from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
 
 from app.api.authorization.utils.role_system import roles_required
 from app.api.roles.v1.schemas import RoleCreate, RoleRead
@@ -13,7 +12,7 @@ from app.settings import UserRoleEnum
 router = APIRouter(
     prefix="/roles",
     tags=["Роли"],
-    # dependencies=[Depends(roles_required(UserRoleEnum.ANY))],
+    dependencies=[Depends(roles_required(UserRoleEnum.ADMIN))],
 )
 
 
@@ -23,7 +22,6 @@ router = APIRouter(
 )
 async def get_all(
     session: AsyncSessionDep,
-    current_user: CurrentUserDep,
 ) -> List[RoleRead]:
     roles: List[RoleRead] = await RoleService(session).get_all()
     return roles
@@ -32,13 +30,6 @@ async def get_all(
 @router.post(
     "/create",
     response_model=RoleRead,
-    dependencies=[
-        Depends(
-            roles_required(
-                UserRoleEnum.ADMIN,
-            )
-        )
-    ],
 )
 async def create(
     role: RoleCreate,
