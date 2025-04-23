@@ -1,6 +1,6 @@
 from pathlib import Path
-from pydantic import BaseModel
 
+from pydantic import BaseModel
 
 BASE_DIR = Path(__file__).parents[3]
 
