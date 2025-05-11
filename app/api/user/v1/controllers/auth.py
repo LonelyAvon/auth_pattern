@@ -6,7 +6,11 @@ from fastapi.security import HTTPBearer
 from app.api.authorization.utils.role_system import roles_required
 from app.api.user.v1.schemas import Token, UserCreate, UserRead, UserSchema
 from app.api.user.v1.services.user import UserService
-from app.api.user.v1.utils.auth.func import CurrentUserDep, validate_current_user
+from app.api.user.v1.utils.auth.func import (
+    CurrentUserDep,
+    refresh_acess_token,
+    validate_current_user,
+)
 from app.api.user.v1.utils.auth.utils import create_token, encode_jwt
 from app.db import AsyncSessionDep
 from app.settings import UserRoleEnum
@@ -57,9 +61,9 @@ async def login(response: Response, user: UserRead = Depends(validate_current_us
     return Token(access_token=access_token)
 
 
-# # @router.get("/refresh", response_model=Token)
-# # async def refresh(token: Token = Depends(refresh_acess_token)):
-# #     return token
+@router.get("/refresh", response_model=Token)
+async def refresh(token: Token = Depends(refresh_acess_token)):
+    return token
 
 
 @router.get(

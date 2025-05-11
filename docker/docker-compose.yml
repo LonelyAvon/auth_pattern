@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  auth_app:
+  fyk_api:
     container_name: ${PROJECT_TITLE}_api
     build:
       context: .
@@ -11,11 +11,9 @@ services:
     env_file:
       - .env.deploy
     ports:
-      - 8000:8000
-    networks:
-      - net
+      - 12020:8000
 
-  auth_postgres:
+  fyk_postgres:
     image: postgres:13.8-bullseye
     container_name: ${PROJECT_TITLE}_db
     restart: always
@@ -26,16 +24,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - auth:/var/lib/postgresql/data
+      - fyk:/var/lib/postgresql/data
     ports:
-      - 5000:5432
-    networks:
-      - net
+      - 12432:5432
 
 volumes:
-  auth:
-    name: auth_postgres
-
-networks:
-  net:
-    external: true
+  fyk:
+    name: fyk_postgres

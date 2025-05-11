@@ -1,25 +1,21 @@
 version: '3.9'
 
 services:
-  auth_postgres:
+  fyk_postgres:
     image: postgres:13.8-bullseye
     container_name: ${PROJECT_TITLE}_db
     restart: always
     env_file:
-      - .env.develop
+      - .env.deploy
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - ${PROJECT_TITLE}:/var/lib/postgresql/data
+      - fyk:/var/lib/postgresql/data
     ports:
-      - "4432:5432"
+      - 12432:5432
 
 volumes:
-  auth_template:
-    name: auth_postgres
-
-networks:
-  net:
-    external: true
+  fyk:
+    name: fyk_postgres

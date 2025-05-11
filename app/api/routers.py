@@ -1,5 +1,6 @@
 from fastapi.routing import APIRouter
 
+from app.api.organization.router import router as organization
 from app.api.roles.router import router as roles
 from app.api.user.router import router as user
 
@@ -8,3 +9,4 @@ from app.api.user.router import router as user
 api_router = APIRouter()
 api_router.include_router(user)
 api_router.include_router(roles)
+api_router.include_router(organization)

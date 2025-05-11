@@ -10,6 +10,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import BYTEA
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from app.api.organization.models import Organization
 from app.api.roles.models import Role
 from app.db.base import Base
 
@@ -21,8 +22,14 @@ class User(Base):
     password: Mapped[BYTEA] = mapped_column(type_=BYTEA(1024))
     surname: Mapped[str] = mapped_column(String(255))
     name: Mapped[str] = mapped_column(String(255))
+    id_organization: Mapped[UUID] = mapped_column(
+        ForeignKey("organizations.id"), nullable=True
+    )
     patronymic: Mapped[Optional[str]] = mapped_column(String(255))
     id_role: Mapped[UUID] = mapped_column(ForeignKey("roles.id"), nullable=False)
     is_archived: Mapped[bool] = mapped_column(Boolean, server_default="false")
 
     role: Mapped[Role] = relationship("Role", back_populates="users", lazy="noload")  # noqa: F821
+    organization: Mapped[Organization] = relationship(
+        "Organization", back_populates="users"
+    )
